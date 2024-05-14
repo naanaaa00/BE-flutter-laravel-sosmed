@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
     Route::get('/posts', [PostController::class, 'index'])->middleware('cors');
     Route::post('/posts', [PostController::class, 'store']);
     Route::get('/posts/{id}', [PostController::class, 'show']);
+    Route::get('/post/{userId}', [PostController::class, 'showPostsByUserId']);
     Route::put('/posts/{id}', [PostController::class, 'update']);
     Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 

@@ -25,6 +25,29 @@ class PostController extends Controller
         ], 200); 
     }
 
+    // Mendapatkan semua posting berdasarkan ID pengguna
+public function showPostsByUserId($userId)
+{
+    
+    $posts = Post::orderBy('created_at', 'desc')
+                ->with('user:id,username') 
+                ->where('user_id', $userId) 
+                ->withCount('comments', 'likes')
+                ->with('likes', function($like){
+                    return $like->where('user_id', auth()->user()->id)
+                    ->select('id', 'user_id', 'post_id')->get();
+                })
+                ->get(); 
+
+    
+    return response([
+        'message' => 'Berhasil mendapatkan semua posting berdasarkan ID pengguna',
+        'posts' => $posts
+    ], 200);
+}
+
+
+
     public function show($id)
     {
         $post = Post::find($id)
