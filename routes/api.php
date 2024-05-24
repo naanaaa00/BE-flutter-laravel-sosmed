@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +49,9 @@ Route::group(['middleware' => ['auth:sanctum']], function() {
 
     //like
     Route::post('/posts/{id}/likes', [LikeController::class, 'likeOrUnlike']);
+
+
+    Route::post('/wishlist/{posdId}', [WishlistController::class, 'addToWishlist']);
+    Route::get('/wishlist', [WishlistController::class, 'getWishlist']);
+
 });
